@@ -1,0 +1,10 @@
+[Unit]
+Description=Reinitialize Razer Blade 16 ALC298 speakers after resume
+After=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/run-razer-alc298-fix
+
+[Install]
+WantedBy=suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target

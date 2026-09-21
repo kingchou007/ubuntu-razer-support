@@ -1,0 +1,12 @@
+[Unit]
+Description=Initialize Razer Blade 16 ALC298 internal speakers
+After=sound.target
+Wants=sound.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/run-razer-alc298-fix
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

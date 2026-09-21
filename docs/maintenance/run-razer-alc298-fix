@@ -1,0 +1,43 @@
+#!/bin/bash
+set -euo pipefail
+
+readonly EXPECTED_CODEC="Realtek ALC298"
+readonly EXPECTED_SUBSYSTEM="0x1a58300a"
+readonly VERB_SCRIPT="/usr/local/lib/razer-audio-fix/rb_audio.sh"
+
+codec_file=""
+for attempt in {1..30}; do
+    for candidate in /proc/asound/card*/codec#*; do
+        [[ -r "$candidate" ]] || continue
+        if grep -q "^Codec: ${EXPECTED_CODEC}$" "$candidate" && \
+           grep -q "^Subsystem Id: ${EXPECTED_SUBSYSTEM}$" "$candidate"; then
+            codec_file="$candidate"
+            break
+        fi
+    done
+    [[ -n "$codec_file" ]] && break
+    sleep 1
+done
+
+if [[ -z "$codec_file" ]]; then
+    echo "Razer ALC298 ${EXPECTED_SUBSYSTEM} codec not found; refusing to run." >&2
+    exit 1
+fi
+
+card_part="${codec_file#/proc/asound/card}"
+card_number="${card_part%%/*}"
+codec_number="${codec_file##*codec#}"
+hda_device="/dev/snd/hwC${card_number}D${codec_number}"
+
+if [[ ! -c "$hda_device" ]]; then
+    echo "HDA device $hda_device is unavailable; refusing to run." >&2
+    exit 1
+fi
+
+if [[ ! -r "$VERB_SCRIPT" ]]; then
+    echo "Verb script $VERB_SCRIPT is missing." >&2
+    exit 1
+fi
+
+sed "s#/dev/snd/hwC2D0#${hda_device}#g" "$VERB_SCRIPT" | /bin/bash >/dev/null
+echo "Razer ALC298 amplifier initialized on $hda_device."

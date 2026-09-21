@@ -1,0 +1,26 @@
+[Unit]
+Description=ubuntu-support Razer Blade 16 fan telemetry and guarded control
+After=systemd-udevd.service
+ConditionPathExists=/sys/class/hidraw
+
+[Service]
+Type=simple
+ExecStart=/usr/libexec/ubuntu-support-fans --daemon
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=10
+RuntimeDirectory=ubuntu-support
+RuntimeDirectoryMode=0755
+UMask=0022
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_UNIX
+LockPersonality=yes
+RestrictSUIDSGID=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=ubuntu-support
+Name[en]=ubuntu-support
+Comment=电源、双风扇、NVIDIA、显示器与实时内核管理
+Exec=ubuntu-support
+Icon=ubuntu-support
+Terminal=false
+Categories=System;Monitor;
+StartupNotify=true
+StartupWMClass=io.github.kingchou007.UbuntuSupport

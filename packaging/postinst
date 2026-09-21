@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+if [ "$1" = configure ] && [ -d /run/systemd/system ]; then
+    systemctl daemon-reload
+    systemctl enable ubuntu-support-fans.service >/dev/null
+    systemctl restart ubuntu-support-fans.service
+fi

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN" "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<policyconfig>
+  <vendor>Ubuntu Support</vendor>
+  <vendor_url>https://github.com/kingchou007/ubuntu-laptop-support</vendor_url>
+  <action id="io.github.kingchou007.ubuntu-support.kernel">
+    <description>Change the next boot kernel</description>
+    <description xml:lang="zh_CN">设置下次启动内核或切换并重启</description>
+    <message>Authentication is required to change the next boot kernel.</message>
+    <message xml:lang="zh_CN">修改下次启动内核需要管理员认证。</message>
+    <defaults><allow_any>no</allow_any><allow_inactive>no</allow_inactive><allow_active>auth_admin</allow_active></defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/libexec/ubuntu-support-kernel</annotate>
+  </action>
+  <action id="io.github.kingchou007.ubuntu-support.fans">
+    <description>Control Razer Blade fans</description>
+    <description xml:lang="zh_CN">调整 Razer Blade 风扇转速</description>
+    <message>Authentication is required to control fan speed.</message>
+    <message xml:lang="zh_CN">调整风扇转速需要管理员认证。</message>
+    <defaults><allow_any>no</allow_any><allow_inactive>no</allow_inactive><allow_active>auth_admin_keep</allow_active></defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/libexec/ubuntu-support-fans</annotate>
+  </action>
+</policyconfig>
